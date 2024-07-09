@@ -12,4 +12,5 @@ next-env.d.ts
 /app
 dist
 
-/public/scryfall
+/renderer/public/scryfall/
+!/renderer/public
