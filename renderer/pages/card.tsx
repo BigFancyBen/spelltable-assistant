@@ -27,7 +27,7 @@ export default function NextPage() {
     <div className="flex justify-center items-center h-full">
       {cardUrl && (
         <Image
-          className="rounded-[30px]"
+          className="rounded-[5%]"
           src={cardUrl}
           alt="Card Image"
           width={672}

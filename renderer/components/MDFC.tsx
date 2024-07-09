@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 
-export default function MDFC({
-  cardName,
-  card1,
-  card2,
-  updateBrowserSourceURL,
-}) {
+export default function MDFC({ card1, card2, updateBrowserSourceURL }) {
   const [frontFaceIsShowing, setFrontFaceIsShowing] = useState(true);
-  console.log(card1, card2);
+
   return (
     <>
       <div className="relative w-full">
         {frontFaceIsShowing ? (
           <img
-            className="rounded-[30px]"
+            className="rounded-[5%]"
             src={card1}
             alt="Card img"
             width={672}
@@ -22,7 +17,7 @@ export default function MDFC({
           />
         ) : (
           <img
-            className="rounded-[30px]"
+            className="rounded-[5%]"
             src={card2}
             alt="Card Image"
             width={672}
@@ -36,7 +31,7 @@ export default function MDFC({
           onClick={() => setFrontFaceIsShowing(!frontFaceIsShowing)}
         />
       </div>
-      <span className="truncate text-xs mt-1">{cardName}</span>
+
       <div>
         <button
           className="bg-gray-300 rounded-lg px-2 py-1 mx-1 text-sm cursor-pointer

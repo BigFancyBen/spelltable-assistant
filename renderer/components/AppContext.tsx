@@ -28,6 +28,23 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       .then(() => {
         console.log("Connected to OBS WebSocket");
         setObs(obsInstance);
+        obsInstance.call("GetCurrentProgramScene").then((data) => {
+          // if no browser source create one
+          obsInstance
+            .call("CreateInput", {
+              sceneName: data.currentProgramSceneName,
+              inputName: "SPELLTABLE-ASSISTANT",
+              inputKind: "browser_source",
+              inputSettings: {
+                url: `http://localhost:8888/card`,
+                width: 1920,
+                height: 1080,
+              },
+            })
+            .catch((error) => {
+              //expected to happen if browser source already exists
+            });
+        });
       })
       .catch((error) => {
         console.log("Failed to connect to OBS WebSocket", error);
@@ -63,8 +80,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       {obs && jsonData ? (
         children
       ) : (
-        <div>
-          {!obs && <div>"Connecting To OBS"</div>}
+        <div className="flex w-full flex-col h-[50vh] justify-center items-center">
+          {!obs && <div>Connecting To OBS...</div>}
           {!jsonData && <div>Loading Card Data...</div>}
         </div>
       )}

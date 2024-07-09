@@ -26,25 +26,20 @@ export function HomePageContent() {
   }, []);
 
   const handleButtonClick = useCallback(() => {
+    if (!cardName) return;
     const newCards = cards.filter(
       (card) =>
         matchCardName(card.name, cardName) &&
         card.legalities.commander === "legal"
     );
-    console.log(newCards);
 
     if (newCards) {
       setFilteredCards(newCards);
     }
   }, [cards, cardName]);
 
-  useEffect(() => {
-    // updateBrowserSourceURL();
-  }, [filteredCards]);
-
   const updateBrowserSourceURL = (newUrl, duration) => {
     if (obs) {
-      const sourceName = "SPELLTABLE-ASSISTANT";
       const browserSourceSettings = {
         url: `http://localhost:8888/card?cardUrl=${newUrl ?? ""}&duration=${
           duration ?? 5
@@ -53,34 +48,47 @@ export function HomePageContent() {
         height: 1080,
       };
 
-      // Create the browser source input
       return obs.call("SetInputSettings", {
-        inputName: sourceName,
+        inputName: "SPELLTABLE-ASSISTANT",
         inputSettings: browserSourceSettings,
       });
     }
   };
 
   return (
-    <>
+    <div className="p-4 bg-gray-100 h-full min-w-[700px]">
       <Head>
         <title>Spelltable Assistant Dashboard</title>
       </Head>
-      <input type="text" value={cardName} onChange={handleInputChange} />
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={handleButtonClick}
-      />
-      <div className="grid grid-cols-8 gap-4 text-2xl w-full text-center bg-none">
+      <h1 className="text-4xl text-center">Spelltable Assistant</h1>
+      <div className="flex items-center justify-center my-4">
+        <input
+          className="border-2 border-gray-300 mr-4 px-4 py-2 rounded-full"
+          type="text"
+          value={cardName}
+          onChange={handleInputChange}
+        />
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
+          onClick={handleButtonClick}
+        >
+          Scryfall Search
+        </button>
+      </div>
+      {filteredCards && filteredCards.length > 0 && (
+        <>
+          <hr className="my-4 border-b-2 border-gray-300 w-full" />
+        </>
+      )}
+      <div className="grid grid-cols-4 gap-4 text-2xl w-full text-center bg-none">
         {filteredCards && filteredCards.length > 0 ? (
           filteredCards.map((card) => (
             <div
-              className="col-span-1 w-full flex items-center justify-center flex-col"
+              className="col-span-1 w-full flex items-center justify-center flex-col bg-gray-200 rounded-lg p-4 drop-shadow-md"
               key={card.id}
             >
               {card.card_faces ? (
                 <MDFC
-                  cardName={card.name}
                   card1={card.card_faces[0].image_uris.normal}
                   card2={card.card_faces[1].image_uris.normal}
                   updateBrowserSourceURL={updateBrowserSourceURL}
@@ -88,10 +96,10 @@ export function HomePageContent() {
               ) : (
                 <>
                   <img
-                    className="rounded-[30px] w-full"
+                    className="rounded-[5%] w-full"
                     src={card?.image_uris?.normal}
                   />
-                  <span className="truncate text-xs mt-1">{card?.name}</span>
+
                   <div>
                     <button
                       className="bg-gray-300 rounded-lg px-2 py-1 mx-1 text-sm cursor-pointer hover:bg-gray-400 transition-colors duration-300"
@@ -115,9 +123,13 @@ export function HomePageContent() {
             </div>
           ))
         ) : (
-          <div>No cards found</div>
+          <div className="col-span-8 text-center">
+            {filteredCards && filteredCards.length === 0
+              ? "No cards found"
+              : ""}
+          </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
