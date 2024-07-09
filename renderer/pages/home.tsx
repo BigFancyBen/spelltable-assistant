@@ -18,12 +18,8 @@ export default function Home() {
 
 export function HomePageContent() {
   const { obs, cards } = useAppContext();
-  // const resculpt = cards.find((card) => card.name === "Resculpt");
-  //state for a text input for card name
   const [cardName, setCardName] = useState("");
-  //state for the card object
   const [filteredCards, setFilteredCards] = useState(undefined);
-  //useCallback to handle the input change
 
   const handleInputChange = useCallback((event) => {
     setCardName(event.target.value);
@@ -42,17 +38,16 @@ export function HomePageContent() {
     }
   }, [cards, cardName]);
 
-  //useEffect to update the browser source URL
   useEffect(() => {
-    updateBrowserSourceURL();
+    // updateBrowserSourceURL();
   }, [filteredCards]);
 
-  const updateBrowserSourceURL = () => {
+  const updateBrowserSourceURL = (newUrl, duration) => {
     if (obs) {
       const sourceName = "SPELLTABLE-ASSISTANT";
       const browserSourceSettings = {
-        url: `http://localhost:8888/card?cardUrl=${
-          filteredCards?.image_uris?.large ?? ""
+        url: `http://localhost:8888/card?cardUrl=${newUrl ?? ""}&duration=${
+          duration ?? 5
         }`,
         width: 1920,
         height: 1080,
@@ -85,16 +80,38 @@ export function HomePageContent() {
             >
               {card.card_faces ? (
                 <MDFC
-                  card1={card.card_faces[0].image_uris.small}
-                  card2={card.card_faces[1].image_uris.small}
+                  cardName={card.name}
+                  card1={card.card_faces[0].image_uris.normal}
+                  card2={card.card_faces[1].image_uris.normal}
+                  updateBrowserSourceURL={updateBrowserSourceURL}
                 />
               ) : (
-                <img
-                  className="rounded-[30px] w-full"
-                  src={card?.image_uris?.small}
-                />
+                <>
+                  <img
+                    className="rounded-[30px] w-full"
+                    src={card?.image_uris?.normal}
+                  />
+                  <span className="truncate text-xs mt-1">{card?.name}</span>
+                  <div>
+                    <button
+                      className="bg-gray-300 rounded-lg px-2 py-1 mx-1 text-sm cursor-pointer hover:bg-gray-400 transition-colors duration-300"
+                      onClick={() =>
+                        updateBrowserSourceURL(card?.image_uris?.large, 5000)
+                      }
+                    >
+                      5s
+                    </button>
+                    <button
+                      className="bg-gray-300 rounded-lg px-2 py-1 mx-1 text-sm cursor-pointer hover:bg-gray-400 transition-colors duration-300"
+                      onClick={() =>
+                        updateBrowserSourceURL(card?.image_uris?.large, 10000)
+                      }
+                    >
+                      10s
+                    </button>
+                  </div>
+                </>
               )}
-              <span className="truncate text-xs mt-1">{card?.name}</span>
             </div>
           ))
         ) : (
