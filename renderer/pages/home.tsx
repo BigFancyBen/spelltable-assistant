@@ -1,4 +1,4 @@
-import React, { use, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Head from "next/head";
 import { AppProvider, useAppContext } from "../components/AppContext";
 import MDFC from "../components/MDFC";
@@ -43,7 +43,7 @@ export function HomePageContent() {
       const browserSourceSettings = {
         url: `http://localhost:8888/card?cardUrl=${newUrl ?? ""}&duration=${
           duration ?? 5
-        }`,
+        }&salt=${Math.random()}`,
         width: 1920,
         height: 1080,
       };

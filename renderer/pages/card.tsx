@@ -3,10 +3,16 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function NextPage() {
-  const cardSrc = useRouter().query.cardUrl as string;
-  const duration = useRouter().query.duration as string;
+  const router = useRouter();
+  const cardSrc = router.query.cardUrl as string;
+  const duration = router.query.duration as string;
   const [cardUrl, setCardUrl] = useState("");
   const [showCard, setShowCard] = useState(false);
+
+  useEffect(() => {
+    setCardUrl(cardSrc);
+    setShowCard(true);
+  }, []);
 
   useEffect(() => {
     setCardUrl(cardSrc);
@@ -32,7 +38,7 @@ export default function NextPage() {
           alt="Card Image"
           width={672}
           height={936}
-          onLoadingComplete={() => setShowCard(true)}
+          onLoad={() => setShowCard(true)}
         />
       )}
     </div>
