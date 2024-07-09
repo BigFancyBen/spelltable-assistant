@@ -12,5 +12,5 @@ next-env.d.ts
 /app
 dist
 
-/renderer/public/scryfall/
+/renderer/public/scryfall/cards.json
 !/renderer/public
