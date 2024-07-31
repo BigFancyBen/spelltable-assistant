@@ -1,30 +1,10 @@
-<p align="center"><img src="https://i.imgur.com/a9QWW0v.png"></p>
-
-## Usage
-
-### Create an App
-
-```
-# with npx
-$ npx create-nextron-app my-app --example with-tailwindcss
-
-# with yarn
-$ yarn create nextron-app my-app --example with-tailwindcss
-
-# with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-tailwindcss
-```
-
 ### Install Dependencies
 
 ```
-$ cd my-app
 
 # using yarn or npm
 $ yarn (or `npm install`)
 
-# using pnpm
-$ pnpm install --shamefully-hoist
 ```
 
 ### Use it
@@ -33,6 +13,9 @@ $ pnpm install --shamefully-hoist
 # development mode
 $ yarn dev (or `npm run dev` or `pnpm run dev`)
 
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
 ```
+
+
+Download the Bulk Data file from scryfall and place it in /renderer/public/scryfall/cards.json
+The Oracle Cards one will do, rename it to cards.json
+https://scryfall.com/docs/api/bulk-data

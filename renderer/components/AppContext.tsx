@@ -23,8 +23,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [jsonData, setJsonData] = useState<any>(null);
   useEffect(() => {
     const obsInstance = new OBSWebSocket();
+    //im sure it doesn't matter that this password is hardcoded 🐴
     obsInstance
-      .connect("ws://127.0.0.1:4455", "hldwdq9CYsb4wCW8")
+      .connect("ws://127.0.0.1:4455", "JVAuo0Bb74o9DId5")
       .then(() => {
         console.log("Connected to OBS WebSocket");
         setObs(obsInstance);

@@ -28,9 +28,9 @@ export function HomePageContent() {
   const handleButtonClick = useCallback(() => {
     if (!cardName) return;
     const newCards = cards.filter(
-      (card) =>
-        matchCardName(card.name, cardName) &&
-        card.legalities.commander === "legal"
+      (card) => matchCardName(card.name, cardName)
+      // &&
+      //   card.legalities.commander === "legal"
     );
 
     if (newCards) {
